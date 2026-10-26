@@ -450,9 +450,15 @@ async def gemini_text(prompt: str, *, max_tokens: int = 900) -> str:
                 "generationConfig": {"temperature": 0.25, "maxOutputTokens": max_tokens},
             },
         )
-    if response.status_code >= 400:
-        logger.warning("Gemini API returned status %s", response.status_code)
-        raise RuntimeError("Gemini request failed")
+   if response.status_code >= 400:
+    logger.error(
+        "Gemini API error: status=%s body=%s",
+        response.status_code,
+        response.text[:2000]
+    )
+    raise RuntimeError(
+        f"Gemini request failed with HTTP {response.status_code}"
+    )
     payload = response.json()
     return payload["candidates"][0]["content"]["parts"][0]["text"]
 
