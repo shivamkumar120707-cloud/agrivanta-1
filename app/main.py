@@ -437,7 +437,7 @@ def crop_suggestions(data: CropAdvisorIn) -> list[dict]:
 async def gemini_text(prompt: str, *, max_tokens: int = 900) -> str:
     """Call Gemini through its REST API using the server-side environment key."""
     key = os.getenv("GEMINI_API_KEY", "").strip()
-    model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
+    model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash").strip() or "gemini-3.8-flash"
     if not key:
         raise RuntimeError("GEMINI_API_KEY is not configured")
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -567,7 +567,7 @@ async def weather(location: str, request: Request):
 @app.post("/api/assistant")
 async def assistant(data: ChatIn, request: Request):
     key = os.getenv("GEMINI_API_KEY", "").strip()
-    model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+    model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash").strip()
     if not key:
         answer = (
             "AI is not configured yet. Add GEMINI_API_KEY to the .env file and restart the server. "
